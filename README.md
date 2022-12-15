@@ -197,7 +197,7 @@ console.log(gsymbol1 === gsymbol2); // true
 console.log(`value: ${symbol1.description}, type: ${typeof symbol1}`); // symbol을 그냥 출력하면 에러가 발생하는데, .description을 통해 string으로 변환해야 에러가 안남
 ```
 
-### 5. Dynamic typing
+### 4. Dynamic typing
 : dynamically typed language
 - 장점: 좋은 아이디어가 있을 때 빠르게 프로토타입을 하고 싶을 때 유용하게 쓸 수 있다.
 - 단점: 어느정도 규모가 있는 프로젝트를 만들 때 아래의 예제와 같은 dynamic typing으로 인한 문제가 생길 수 있음.
