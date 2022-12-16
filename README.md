@@ -1,4 +1,10 @@
-# JavaScript
+# JavaScript 정리
+
+## 목차
+[1. 콘솔에 출력하기](#콘솔에-출력하기)   
+[2. script async와 defer의 차이점](#script-async와-defer의-차이점)   
+[3. Data types](#data-types)    
+[4. Operators](#operators)    
 
 ## 콘솔에 출력하기
 ex) Hello world! 출력    
@@ -63,7 +69,7 @@ HTML에서 JavaScript를 포함시키는 방법은 여러가지가 있다.
 
 -> defer 속성이 가장 효율적이고 안전하다.   
 
-## datatypes
+## Data types
 ### 1. let (added in ES6)
 : mutable datatype - 메모리에 값을 할당하고 그 값을 변경할 수 있는 데이터타입
 ```javascript
@@ -213,3 +219,104 @@ text = "8" / "2";
 console.log(`value: ${text}, type: ${typeof text}`); // number
 console.log(text.charAt(0)); // error : runtime에서 타입이 정해지기 때문에 발생하는 문제
 ```
+
+## Operators
+### 1. String concatenation
++기호를 통해 문자열을 연속해서 나타낼 수 있다.
+```javascript
+console.log("my" + "cat");
+console.log("1" + 2); // string + number -> string
+console.log(`string literals: 
+    ''''
+    1 + 2 = ${1 + 2}`);
+console.log("hj's\tbooks\n");
+```
+string literals의 장점은 줄 바꿈이나 특수 기호를 적어도 인식한다는 것이다.   
+하지만 따옴표('')로 문자열을 작성하면 줄 바꿈이나 특수 기호를 인식하지 못하는데, \, \n, \t 등의 특수 문자열을 통해 인식하도록 만들 수 있다.   
+### 2. Numeric operators
+기본적인 더하기, 빼기, 곱하기, 나누기, 나머지, 제곱 연산자이다.   
+```javascript
+console.log(1 + 1); // add
+console.log(1 - 1); // subtract
+console.log(1 * 1); // multiply
+console.log(1 / 1); // divide
+console.log(1 % 1); // remainder
+console.log(1 ** 1); // exponentiation
+```
+
+### 3. Increment and decrement operators
+증가 연산자 ++와 감소 연산자--를 변수의 앞에 쓰는지 뒤에 쓰는지에 따라 결과가 다르게 나온다.   
+- 증감 연산자를 변수 앞에 쓰고 결과를 출력해보면, 증감 연산이 이루어진 후 대입이 되기 때문에 증감 연산이 이루어진 결과가 나오게 된다.
+- 증감 연산자를 변수 뒤에 쓰고 결과를 출력해보면, 대입이 먼저 되고 증감 연산이 이루어지기 때문에 증감 연산이 이루어지지 않은 결과가 나오게 된다.   
+```javascript
+let counter = 2;
+const preIncrement = ++counter;
+// counter = counter + 1;
+// preIncrement = counter;
+console.log(`preIncrement: ${preIncrement}, counter: ${counter}`);
+const postIncrement = counter++;
+// preIncrement = counter;
+// counter = counter + 1;
+console.log(`preIncrement: ${preIncrement}, counter: ${counter}`);
+const preDecrement = --counter;
+// counter = counter - 1;
+// preDecrement = counter;
+console.log(`preDecrement: ${preDecrement}, counter: ${counter}`);
+const postDecrement = counter--;
+// preDecrement = counter;
+// counter = counter - 1;
+console.log(`preDecrement: ${preDecrement}, counter: ${counter}`);
+```
+
+### 4. Assignment operators
+```javascript
+let a = 3;
+let b = 6;
+a += b; // a = a + b;
+a -= b;
+a *= b;
+a /= b;
+```
+
+### 5. Comparison operators
+```javascript
+console.log(10 < 6); // less than
+console.log(10 <= 6); // less than or equal
+console.log(10 > 6); // greater than
+console.log(10 >= 6); // greater than or equal
+```
+
+### 6. Logical operators: ||(or), &&(and), !(not)
+- #### ||(or)
+finds the first truthy value: 하나라도 true이면 결과는 true가 나온다.    
+따라서 값이 여러 개일 때 첫 번째부터 true/false를 확인한 뒤 첫 번째 값이 true일 때는 뒤에 있는 값들은 연산을 하지 않고 바로 true가 된다.   
+```javascript
+const value1 = true;
+const value2 = 4 < 2;
+function check() {
+  for (let i = 0; i < 10; i++) {
+    // wasting time
+    console.log("😃");
+  }
+  return true;
+}
+
+console.log(`or: ${value1 || value2 || check()}`);
+```
+
+- #### &&(and)
+finds the first falsy value: 하나라도 false이면 결과는 false가 나온다.   
+따라서 값이 여러 개일 때 첫 번째부터 true/false를 확인한 뒤 첫 번째 값이 false일 때는 뒤에 있는 값들은 연산을 하지 않고 바로 false가 된다. 
+```javascript
+console.log(`and: ${value1 && value2 && check()}`);
+```
+
+> ⭐ **효율적인 코드 작성법**   
+>  ||(or) 연산이나 &&(and) 연산을 쓸 때 가장 heavy operation 값일수록 제일 뒤쪽으로 보내서 가장 마지막에 체크하도록 하는 것이 좋다.   
+
+- #### !(not)
+```javascript
+const value = true;
+console.log(!value);
+```
+
