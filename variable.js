@@ -1,7 +1,7 @@
 // 1. Use strict (added in ES5)
 "use strict";
 
-// 2. Variable
+// 2. Variable, rw(read/write)
 // let (added in ES6)
 // - mutable datatype: 값을 변경할 수 있는 데이터타입
 let globalName = "global name";
@@ -18,7 +18,10 @@ console.log(globalName);
 // var hoisting (move declaration from bottom to top: 어디에 선언했는지와 상관없이 항상 제일 위로 선언을 끌어올려주는 것을 의미)
 // has no block scope: 블록을 이용해서 선언해도 무시하고 밖에서도 정상적으로 출력됨
 
-// 3. Constants: 절대 값을 변경할 수 없는 데이터 타입
+// 3. Constant: 절대 값을 변경할 수 없는 데이터 타입, r(read only)
+// use const whenever possible.
+// only use let if variable needs to change.
+
 // favor immutable data type always for a few reasons:
 // - security
 // - thread safety
@@ -27,6 +30,10 @@ const daysInweek = 7;
 const maxNumber = 5;
 console.log(daysInweek);
 console.log(maxNumber);
+
+// Note
+// Immutable data types: primitive types, frozen objects(i.e. object.freeze())
+// Mutable data types: all objects by default are mutable in JS
 
 // 4. Variable types
 // primitive - single item: number, string, boolean, null, undefined, symbol
@@ -95,4 +102,4 @@ text = "7" + 5;
 console.log(`value: ${text}, type: ${typeof text}`); // string
 text = "8" / "2";
 console.log(`value: ${text}, type: ${typeof text}`); // number
-console.log(text.charAt(0)); // error : runtime에서 타입이 정해지기 때문에 발생하는 문제
+// console.log(text.charAt(0)); // error : runtime에서 타입이 정해지기 때문에 발생하는 문제
