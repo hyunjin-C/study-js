@@ -319,4 +319,146 @@ console.log(`and: ${value1 && value2 && check()}`);
 const value = true;
 console.log(!value);
 ```
+### 7. Equality
+동등하다는 것을 의미하는 연산자는 2가지 종류가 있다.
+- ==: 타입이 다르더라도 의미하는 것이나 겉으로 보기에 같으면 true로 리턴한다.
+- ===: 타입까지 모든 것이 같을 때 true로 리턴한다.
+```javascript
+const stringFive = "5";
+const numberFive = 5;
 
+// == loose equality, with type conversion
+console.log(stringFive == numberFive);
+console.log(stringFive != numberFive);
+
+// === strict equality, no type conversion
+console.log(stringFive === numberFive);
+console.log(stringFive !== numberFive);
+
+// object equality by reference
+const ellie1 = { name: "ellie" };
+const ellie2 = { name: "ellie" };
+const ellie3 = ellie1;
+console.log(ellie1 == ellie2); // false
+console.log(ellie1 === ellie2); // false
+console.log(ellie1 === ellie3); // true
+```
+ellie1과 ellie2는 객체로 같은 값을 넣었기 때문에 겉으로 보기에는 같아보이지만 ellie1과 ellie2가 가리키는 레퍼런스는 다르다. 각각의 레퍼런스에서 name이라는 변수에 ellie 값을 넣은 것이다. ellie3은 ellie1을 대입한 것이기 때문에 ellie1의 레퍼런스를 가리키게 되었으므로 ellie1과 ellie3은 같게 된다.
+
+```javascript
+// equality - puzzler
+console.log(0 == false); // true
+console.log(0 === false); // false
+console.log("" == false); // true
+console.log("" === false); // false
+console.log(null == undefined); // true
+console.log(null === undefined); // false
+```
+
+### 8. Conditional operator: If
+if, else if, else를 이용하여 조건 연산을 수행한다.
+```javascipt
+const your_name = "df";
+if (your_name === "ellie") {
+  console.log("Welcome, Ellie!");
+} else if (your_name === "coder") {
+  console.log("You are amazing coder!");
+} else {
+  console.log("unknown");
+}
+```
+
+### 9. Ternary operator: ?
+condition ? value1 : value2   
+이와 같은 표현식을 사용하여 if문보다 더 간단하게 조건식을 나타낼 수 있다. 하지만 너무 많은 조건이나 변수들이 있어 복잡하다면 가독성을 떨어트리게 되므로 그럴 때는 사용하지 않는 것이 좋다.   
+```javascript
+console.log(name === "ellie" ? "yes" : "no");
+```
+
+### 10. Switch statement
+switch문은 다음과 같은 상황일 때 사용하면 좋다.      
+- use for multiple if checks: 체크해야하는 것이 여러 개일 경우   
+- use for enum-like value check: 체크하는 값이 enum(열거형)같은 값인 경우   
+- use for multiple type checks in TS: 타입스크립트에서 여러개의 타입을 체크할 경우   
+```javascript
+const browser = "IE";
+switch (browser) {
+  case "IE":
+    console.log("go away!");
+    break;
+  case "Chrome":
+  case "FireFox":
+    console.log("love you!");
+    break;
+  default:
+    console.log("same all!");
+    break;
+}
+```
+
+### 11. loop
+반복문의 종류는 3가지가 있다.
+- while   
+- do while   
+- for    
+조건이 참이면 그 조건의 블록 안에 있는 코드가 실행되고 그렇지 않다면 빠져나온다.   
+
+- #### while
+```javascript
+let i = 3;
+while (i > 0) {
+  console.log(`while: ${i}`);
+  i--;
+}
+```
+while문은 조건이 먼저 참인지 확인 후 실행된다.   
+
+- #### do while
+```javascript
+do {
+  console.log(`do while: ${i}`);
+  i--;
+} while (i > 0);
+```
+do while문은 먼저 실행 후에 조건이 참인지 확인하기 때문에 조건이 참이 아니더라도 무조건 한 번은 실행되어 while문과는 차이가 있다.   
+
+- #### for
+```javascript
+for (i = 3; i > 0; i--) {
+  console.log(`for: ${i}`);
+}
+
+for (let i = 3; i > 0; i = i - 2) {
+  // inline variable declaration
+  console.log(`inline variable for: ${i}`);
+}
+```
+
+반복문은 중첩해서도 사용할 수 있는데, 이는 시간복잡도가 O(n^2)이 되기 때문에 되도록이면 쓰지 않는 것이 좋다.
+```javascript
+for (let i = 0; i < 10; i++) {
+  for (let j = 0; j < 10; j++) {
+    console.log(`i: ${i}, j: ${j}`);
+  }
+}
+```
+
+다음은 조건문과 반복문 사용의 예시 문제이다. (break, continue 사용)
+```javascript
+// Q1. iterate from 0 to 10 and print only even numbers (use continue)
+for (let i = 0; i < 11; i++) {
+  if (i % 2 === 1) {
+    continue;
+  }
+  console.log(`q1: ${i}`);
+}
+
+// Q2. iterate from 0 to 10 and print numbers until reaching 8 (use break)
+for (let i = 0; i < 11; i++) {
+  if (i > 8) {
+    break;
+  }
+  console.log(`q2: ${i}`);
+}
+```
+※ 1번 문제는 continue를 쓰지 않고 바로 짝수만 출력하도록 하는 것이 더 간단하지만 continue 사용 예시를 나타내기 위해 이와 같이 작성한 것이다.
