@@ -608,7 +608,7 @@ function upgradeUser(user) {
 ```
 
 ## First-class function
-: funtions are treated like any other variable (함수를 변수처럼 다룬다는 것이다.)
+: functions are treated like any other variable (함수를 변수처럼 다룬다는 것이다.)
 - can be assigned as a value to varaiabe: 변수에 할당 가능
 - can be passed as an argument to other functions: function에 파라미터로 전달 가능
 - can be returned by another function: 리턴 값으로 리턴 가능
