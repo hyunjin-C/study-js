@@ -183,6 +183,8 @@ function calculate(command, a, b) {
     console.log(a * b);
   } else if (command === "reminder") {
     console.log(a % b);
+  } else {
+    throw Error("unknown command");
   }
 }
 
@@ -205,6 +207,8 @@ calculate("substract", 8, 4);
     case "reminder":
       console.log(a % b);
       break;
+    default:
+      throw Error("unknown command");
   }
 })("multiply", 3, 8);
 
