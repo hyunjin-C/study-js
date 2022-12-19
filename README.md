@@ -5,6 +5,7 @@
 [2. script async와 defer의 차이점](#script-async와-defer의-차이점)   
 [3. Data types](#data-types)    
 [4. Operators](#operators)    
+[5. Function](#function)
 
 ## 콘솔에 출력하기
 ex) Hello world! 출력    
@@ -461,4 +462,237 @@ for (let i = 0; i < 11; i++) {
   console.log(`q2: ${i}`);
 }
 ```
-※ 1번 문제는 continue를 쓰지 않고 바로 짝수만 출력하도록 하는 것이 더 간단하지만 continue 사용 예시를 나타내기 위해 이와 같이 작성한 것이다.
+※ 1번 문제는 continue를 쓰지 않고 바로 짝수만 출력하도록 하는 것이 더 간단하지만 continue 사용 예시를 나타내기 위해 이와 같이 작성한 것이다.   
+
+## Function
+
+### function의 특징
+- fundamental building block in the program: 프로그램을 구성하는 기본적인 빌딩 블록   
+- subprogram can be used multiple times: subprogram이라고도 불리며 여러 번 재사용이 가능하다는 장점이 있다.   
+- performs a task or calculates a value: 대체적으로 한 가지의 일을 수행하거나 값을 계산하기 위해 사용된다.   
+
+### 1. function declaration (함수 선언 방법)
+function name(param1, param2) { body... return; }   
+- naming: doSomething, command, verb 형태   
+- 함수 이름을 짓기가 어렵다면 너무 많은 기능을 하는 함수를 만들지는 않았는지 확인해보아야한다.   
+  ex) createCardAndPoint -> createCard, createPoint   
+- function is object in JS   
+  자바스크립트에서 function은 object이기 때문에 변수에 할당할 수도 있고 파라미터로 전달할 수도 있으며 함수를 return할 수도 있다.   
+  
+```javascript
+function printHello() {
+  console.log("Hello");
+}
+
+printHello();
+
+// function with parameters
+
+function log(message) {
+  console.log(message);
+}
+
+log("Hello!");
+```
+❕ 하지만 자바스크립트에는 단점이 있는데, 타입이 없다는 것이다.     
+따라서 위의 코드에서 볼 수 있듯이 타입이 없어서 함수 자체의 인터페이스만 보았을 때는 메시지를 전달할 때 어떤 타입으로 전달해야 할지 명확하지 않아 타입이 중요한 함수에서는 난해할 수도 있게 된다.   
+-> 이 문제점을 해결하기 위해 TypeScript에서는 타입을 지정하여 명확하게 나타낼 수 있도록 만들어졌다.
+
+### 2. Parameters
+- primitive parameters: passed by value   
+- object parameters: passed by reference   
+
+전달되는 파라미터의 종류로는 는 두 가지가 있는데, primitive type과 object type이 있다.   
+primitive type은 메모리에 value가 그대로 저장되어 있기 때문에 value가 전달되고 object type은 메모리에 레퍼런스가 저장되기 때문에 레퍼런스가 전달된다.   
+
+```javascript
+// primitive parameter
+function changeName(obj) {
+  obj.name = "coder";
+}
+//object parameter
+const ellie = { name: "ellie" };
+changeName(ellie);
+console.log(ellie);
+```
+
+### 3. Default parameters (added in ES6)
+ES6 이전에는 파라미터에 값이 전달되지 않을 경우를 대비해서 if문을 통해 구현해야했는데, ES6부터는 파라미터에 원하는 default 값을 바로 지정해줄 수 있어 간편하게 처리할 수 있다.    
+
+```javascript
+// ES6 이전 코드
+function showMessage(message, from = "unknown") {
+  if (from === undefined) {
+      from = "unknown";
+  }
+  console.log(`${message} by ${from}`);
+}
+
+// ES6
+function showMessage(message, from = "unknown") {
+  console.log(`${message} by ${from}`);
+}
+```
+
+### 4. Rest parameters (added in ES6)
+```javascript
+function printAll(...args) {
+  for (let i = 0; i < args.length; i++) {
+    console.log(args[i]);
+  }
+
+  for (const arg of args) {
+    console.log(arg);
+  }
+
+  args.forEach((arg) => console.log(arg));
+}
+
+printAll("dream", "coding", "ellie");
+```
+
+...args와 같이 .을 3개 작성하는 것을 Rest parameters라고 부르는데 이것은 함수를 호출할 때 인자들이 배열 형태로 전달되게 된다.   
+위에 작성한 for문들은 전달 받은 값들을 차례대로 출력하는 코드인데 위와 같이 3가지 방법으로 작성할 수 있다. 2번째와 3번째 방법은 같은 코드를 더 간단하게 작성하는 방법이다.   
+
+### 5. Local scope
+안에서는 밖을 볼 수 없지만 밖에서는 안을 볼 수 있다.   
+
+```javascript
+let globalMessage = "global"; // global variable
+function printMessage() {
+  let message = "hello"; // local variable
+  console.log(message);
+  console.log(globalMessage);
+
+  function printAnother() {
+    console.log(message);
+    let childMessage = "hello";
+  }
+  // console.log(childMessage); // error
+}
+
+printMessage();
+```
+
+### 6. Return a value
+```javascript
+function sum(a, b) {
+  return a + b;
+}
+
+const result = sum(1, 2); // 3
+console.log(`sum: ${sum(1, 2)}`);
+```
+※ return type이 없는 함수들은 기본적으로 return undefined 들어가있는 것과 똑같다.(생략 가능)   
+
+### 7. Early return, early exit
+현업에서 코드 리뷰 시 많이 들어볼 수 있는 말로, 최대한 빨리 리턴을 해주는 것이 좋다는 것이다.   
+어떤 조건일 때 로직을 수행하도록 만드는 코드를 작성해야하는 경우 아래의 코드와 같이 조건이 맞지 않을 때 return해서 함수를 종료하고 필요한 로직은 그 뒤에 작성하여 조건이 맞을 때만 실행하도록 하는 것이 더 좋은 코드라는 것이다.    
+⁎ 활용: 조건이 맞지 않는 경우, 값이 undefined일 경우, 값이 -1인 경우 등
+
+```javascript
+// bad
+function upgradeUser(user) {
+  if (user.point > 10) {
+    // long upgrade logic...
+  }
+}
+
+// good
+function upgradeUser(user) {
+  if (user.point <= 10) {
+    return;
+  }
+  // long upgrade logic...
+}
+```
+
+## First-class function
+: funtions are treated like any other variable (함수를 변수처럼 다룬다는 것이다.)
+- can be assigned as a value to varaiabe: 변수에 할당 가능
+- can be passed as an argument to other functions: function에 파라미터로 전달 가능
+- can be returned by another function: 리턴 값으로 리턴 가능
+
+### 1. Function expression
+
+```javascript
+const print = function () {
+  // anonymous function
+  console.log("print");
+};
+
+print();
+
+const printAgain = print;
+printAgain();
+
+const sumAgain = sum;
+console.log(sumAgain(1, 3));
+```
+
+> #### function declaration과 function expression의 차이점
+- a function declaration can be called earlier than it is defined.(hoisted)    
+- a function expression is created when the execution reaches it     
+
+function expression은 함수가 변수에 할당된 다음부터 호출이 가능하지만, function declaration은 hoisting이 된다. 함수가 선언되기 이전에 호출이 가능하다는 것이다. 이는 자바스크립트 엔진이 선언된 것을 제일 위로 올려주기 때문이다.   
+
+### 2. Callback function using function expression
+
+```javascript
+function randomQuiz(answer, printYes, printNo) {
+  if (answer === "love you") {
+    printYes();
+  } else {
+    printNo();
+  }
+}
+
+// anoymous function
+const printYes = function () {
+  console.log("yes!");
+};
+
+// named function
+// - better debugging in debugger's stack traces
+// - recursions
+
+const printNo = function print() {
+  console.log("no!");
+  //print();
+};
+
+randomQuiz("wrong", printYes, printNo);
+randomQuiz("love you", printYes, printNo);
+```
+
+위의 예시에서 randomQuiz 함수를 보면, answer와 answer가 맞을 때 호출하게 될 함수 printYes, answer가 틀릴 때 호출하게 될 함수 printNo를 전달해주는데, 이를 Callback function라고 한다. 이 두 개의 Callback functions가 파라미터로 전달이 된다.
+
+- #### anoymous function    
+: 함수의 이름을 지정하지 않고 함수를 바로 변수에 할당해주는 것이다.  
+- #### named function    
+: 함수의 이름을 지정하고 그 함수를 변수에 할당해주는 것이다.   
+함수의 이름을 지정하면 디버깅을 할 때 디버거의 stack traces에 함수의 이름이 나오기 때문에 이것이 필요한 상황일 경우에 사용한다. 또한 함수를 재귀적으로 호출이 필요할 경우에 사용한다.    
+    
+- #### Arrow function
+  - very concise    
+  - always anoymous    
+
+: arrow function은 매우 간결하다는 장점이 있고 arrow function으로 작성할 때는 항상 anoymous function로 써야 한다.    
+
+```javascript
+const simplePrint = () => console.log("simplePrint!");
+const add = (a, b) => a + b;
+const simpleMultiply = (a, b) => {
+  // do something more
+  return a * b;
+};
+```
+
+### ❕ IIFE: Immediately Invoked Function Expression
+함수를 정의한 후 따로 호출하지 않고 바로 실행하고 싶을 때 사용하는 방법이다. 함수 전체를 소괄호()로 씌운 뒤에 마지막 부분에 파라미터를 전달해주거나 없으면 빈 괄호를 쓰면 바로 실행된다.    
+
+```javascript
+(function hello() {
+  console.log("IIFE");
+})();
+```
