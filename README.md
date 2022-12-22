@@ -6,7 +6,7 @@
 [3. Data types](#data-types)    
 [4. Operators](#operators)    
 [5. Function](#function)   
-[6. Class](#class)
+[6. Class](#class-introduced-in-es6)
 
 ## 콘솔에 출력하기
 ex) Hello world! 출력    
@@ -845,3 +845,150 @@ console.log(triangle instanceof Object); // true
 ```
 ❕ 우리가 만드는 모든 object들은 자바스크립트에 있는 Object를 상속한다.
 
+## Objects
+- one of the JavaScript's data types
+- a collection of related data and/or functionality
+- Nearly all objects in JavaScript are instances of Object.
+- object = { key: value }; object는 key와 value의 집합체이다.
+
+### 1. Literals and properties
+객체를 생성할 수 있는 방법은 2가지가 있다.
+- object literal: {}를 통해 생성한다.
+- object constructor: new 키워드와 클래스 이름을 통해 생성한다.
+
+```javascript
+const obj1 = {}; // 'object literal' syntax
+const obj2 = new Object(); // 'object contructor' syntax
+
+function print(person) {
+  console.log(person.name); // ellie
+  console.log(person.age); // 4
+}
+
+const ellie = { name: "ellie", age: 4 }; // object
+print(ellie);
+```
+
+> ### with JavaScript magic (dynamically typed language)
+> - #### can add properties later   
+> : JavaScript는 동적으로 타입이 Runtime(프로그램이 동작하고 있을 때) 결정되기 때문에 뒤늦게 object를 정의했음에도 불구하고 properties를 더 추가할 수 있다.    
+> -> 하지만 유지보수가 힘들고 예상치 못한 에러가 발생할 수 있기 때문에 안쓰는 것이 좋다.   
+> ```javascript
+> ellie.hasJob = true;
+> console.log(ellie.hasJob);
+> ```
+>   
+> - #### can delete properties later
+> Javascript는 나중에 properties를 지우는 것도 가능하다.   
+>```javascript
+> delete ellie.hasJob;
+> console.log(ellie.hasJob);
+>```
+
+### 2. Computed properties: 계산된 properties
+객체의 속성에 접근하는 방식은 2가지가 있다.
+- #### object.property: .을 통해 접근하는 방법   
+코딩하는 그 순간 key에 대한 value를 가져오고 싶을 때 사용한다.
+- #### object["property"]: 배열에 접근하는 것처럼 [""]를 통해 접근하는 방법   
+정확하게 어떤 key가 필요한지 모를 때 runtime에서 결정될 때 사용한다.   
+-> 따라서 동적으로 key에 대한 value를 받아와야할 때 유용하게 쓸 수 있다.
+
+```javascript
+console.log(ellie.name);
+console.log(ellie["name"]); // key should be always string
+ellie["hasJob"] = true;
+console.log(ellie.hasJob);
+
+function printValue(obj, key) {
+  console.log(obj[key]); // conputed property
+  // console.log(obj.key); // undefined -> object에 key라는 property가 들어있지 않기 때문
+}
+printValue(ellie, "name");
+printValue(ellie, "age");
+```
+
+### 3. Property value shorthand
+Constructor Function에 property value를 만들어주면 객체 생성 시에 new 키워드와 함수 이름을 통해 객체를 간편하게 생성할 수 있다.
+```javascript
+const person1 = { name: "bob", age: 2 };
+const person2 = { name: "steve", age: 3 };
+const person3 = { name: "dave", age: 4 };
+const person4 = new Person("ellie", 30); // Class에서 object를 만드는 것처럼 객체를 생성한다. 
+console.log(person4);
+```
+
+### 4. Constructor Function
+: Class Constructor 작성한 것처럼 쓰면 된다.   
+```javascript
+function Person(name, age) {
+  // this = {};
+  this.name = name;
+  this.age = age;
+  // return this;
+}
+```
+
+### 5. in operator: property existence check (key in obj)
+: in이라는 키워드를 통해 해당하는 key가 object에 있는지 없는지 확인할 수 있다.
+
+```javascript
+console.log("name" in ellie);
+console.log("age" in ellie);
+console.log("random" in ellie);
+console.log(ellie.random); // undefined
+```
+
+### 6. for..in vs for..of
+- #### for (key in obj)
+in을 사용하여 객체의 키에 대한 값을 출력할 수 있다.
+
+```javascript
+for (key in ellie) {
+  console.log(key);
+}
+```
+
+- #### for (value of iterable)
+배열에 접근할 때 of를 통해 더욱 간단하게 출력할 수 있다.   
+
+```
+const array = [1, 2, 4, 5];
+for (value of array) {
+  console.log(value);
+}
+```
+
+### 7. Fun Cloning
+```javascript
+Object.assign(dest, [obj1, obj2, obj3,...])
+```
+
+#### <기존의 레퍼런스를 가리키도록 하는 방법>
+```javascript
+const user = { name: "ellie", age: 20 };
+const user2 = user;
+console.log(user);
+```
+
+#### <object를 복제하는 방법>
+- ##### old way
+```javascript
+const user3 = {};
+for (key in user) {
+  user3[key] = user[key];
+}
+console.log(user3);
+```
+
+- ##### now
+```javascript
+const user4 = Object.assign({}, user);
+console.log(user4);
+
+// 여러 개의 source 전달
+const fruit1 = { color: "red" };
+const fruit2 = { color: "blue", size: "big" };
+const mixed = Object.assign({}, fruit1, fruit2); // 여러 개일 때는 마지막에 있는 것으로 덮어씌워지게 됨
+console.log(mixed.color); // blue
+console.log(mixed.size); // big
+```
