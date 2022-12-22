@@ -29,6 +29,8 @@ console.log(ellie.age);
 ellie.speak();
 
 // 2. Getter and setters
+// 사용자가 실수로 잘못 사용해도 조금 더 방어적인 자세로 만들 수 있도록 해주는 것
+// get이라는 키워드를 이용해서 리턴하고, set이라는 키워드를 이용해서 값을 설정해줄 수 있다.
 class User {
   constructor(firstName, lastName, age) {
     this.firstName = firstName;
@@ -42,12 +44,16 @@ class User {
 
   set age(value) {
     this._age = value < 0 ? 0 : value;
+    // 계속 값이 setter를 호출하게 되어 call stack이 다 차는 것을 방지하기 위해 getter와 setter에 쓰이는 변수의 이름을 다르게 설정해준다.
   }
 }
 
 const user1 = new User("Steve", "Jobs", -1);
 console.log(user1.age);
-// 추가 설명
+// age에 대한 getter를 정의하는 순간 this.age는 메모리에 올라가있는 데이터를
+// 읽어들이는 것이 아니라 바로 getter를 호출한다.
+// age에 대한 setter를 정의하는 순간 = age; 값을 할당할 때 메모리의 값을 할당하는
+// 것이 아니라 바로 setter를 호출한다.
 
 // 3. Fields (public , private)
 // Too soon! -> 이제는 지원이 거의 다 되는 듯하다.
@@ -60,7 +66,7 @@ console.log(experiment.publicField);
 console.log(experiment.privateField);
 
 // 4. Static properties and methods
-// Too soon!
+// Too soon! -> 이것도 이제는 지원 거의 다 되는 듯
 class Article {
   static publisher = "Dream Coding";
   constructor(articleNumber) {
@@ -77,7 +83,7 @@ console.log(Article.publisher);
 Article.printPublisher();
 
 // object에 상관없이, 들어오는 데이터에 상관없이 공통적으로 클래스에서 쓸 수 있는 거라면
-// static을 이용하여 작성하는 것이 메모리의 사용을 줄여줄 수 있다.
+// static과 static method를 이용하여 작성하는 것이 메모리의 사용을 줄여줄 수 있다.
 
 // 5. Inheritance
 // a way for one class to extend another class.
