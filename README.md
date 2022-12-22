@@ -6,7 +6,8 @@
 [3. Data types](#data-types)    
 [4. Operators](#operators)    
 [5. Function](#function)   
-[6. Class](#class-introduced-in-es6)
+[6. Class](#class-introduced-in-es6)   
+[7. Objects](#objects)   
 
 ## 콘솔에 출력하기
 ex) Hello world! 출력    
