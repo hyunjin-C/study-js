@@ -22,7 +22,7 @@
 }
 
 // join(separator?)과 split(separator, limit?)은 반대되는 개념이다.
-// join은 list -> array이고, split은 array -> list
+// join은 array->string이고, split은 string->array
 
 // Q3. make this array look like this: [5, 4, 3, 2, 1]
 {
