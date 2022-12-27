@@ -8,6 +8,7 @@
 [5. Function](#function)   
 [6. Class](#class-introduced-in-es6)   
 [7. Objects](#objects)   
+[8. Array](#array)
 
 ## 콘솔에 출력하기
 ex) Hello world! 출력    
@@ -992,4 +993,134 @@ const fruit2 = { color: "blue", size: "big" };
 const mixed = Object.assign({}, fruit1, fruit2); // 여러 개일 때는 마지막에 있는 것으로 덮어씌워지게 됨
 console.log(mixed.color); // blue
 console.log(mixed.size); // big
+```
+
+## Array
+### 1. Declaration: 배열 선언
+: 배열의 선언 방법에는 2가지가 있다.
+- new 키워드를 이용하여 선언하는 방법
+```javascript
+const arr1 = new Array();
+```
+- 대괄호를 이용하여 데이터를 넣어 만드는 방법
+```javascript
+const arr2 = [1, 2];
+```
+
+### 2. Index position
+: 인덱스로 배열 접근하기
+
+```javascript
+const deserts = ["🍦", "🧁"];
+console.log(deserts);
+console.log(deserts.length);
+console.log(deserts[0]);
+console.log(deserts[1]);
+console.log(deserts[2]);
+console.log(deserts[deserts.length - 1]); // 마지막 인덱스 접근
+```
+※ 마지막 인덱스를 출력할 때 주로 length를 이용해 출력한다.
+
+### 3. Looping over an array
+: 배열의 모든 원소 접근하여 출력하는 방법에는 반복문을 이용한 3가지 방법이 있다.- 
+- for
+```javascript
+for (let i = 0; i < deserts.length; i++) {
+  console.log(deserts[i]);
+}
+```
+- for of
+```javascript
+for (let desert of deserts) {
+  console.log(desert);
+}
+```
+- forEach
+```javascript
+deserts.forEach((desert) => console.log(desert));
+```
+Performs the specified action for each element in an array.    
+forEach는 배열 안에 들어있는 value들마다 내가 전달한 함수를 출력한다   
+
+### 4. Addition, deletion, copy
+- #### 배열에 데이터 추가하기(뒤에)
+**push**: add an item to the end
+```javascript
+deserts.push("🍩", "🍪");
+console.log(deserts);
+```
+- #### 배열에 있는 데이터 삭제하기(뒤에서부터)
+**pop**: remove an item from the end
+```javascript
+deserts.pop();
+deserts.pop();
+console.log(deserts);
+```
+
+- #### 배열의 가장 앞에 데이터 추가하기
+**unshift**: add an item to the benigging
+```javascript
+deserts.unshift("🍰", "☕");
+console.log(deserts);
+```
+
+- #### 배열의 가장 앞에 있는 데이터 삭제하기
+**shift**: remove an item from the benigging   
+```javascript
+deserts.shift();
+console.log(deserts);
+```
+
+> #### note!! shift, unshift are slower than pop, push    
+> : shift와 unshirt는 전체 배열이 shift되어 가장 앞에 삽입되거나 가장 앞에 있는 데이터가 삭제되는 것이기 때문에 시간이 매우 오래 걸리므로 안쓰는 것이 좋다.    
+
+- #### 원하는 위치의 데이터 삭제하기(+원하는 위치에 데이터 추가하기)
+**splice**: remove an item by index position, inserts new elements in their place    
+: 인덱스를 이용하여 삭제할 수 있고, 그 위치에 원하는 요소를 추가할 수도 있다.
+```javascript
+deserts.push("🍫", "🍮");
+console.log(deserts);
+deserts.splice(2, 1); // splice(인덱스, 인덱스로부터 지울 개수)
+console.log(deserts);
+deserts.splice(1, 1, "🎂", "🍭");
+console.log(deserts);
+```
+
+- #### 두 배열 합치기
+**concat**: combine two arrays   
+```javascript
+const deserts2 = ["🥐", "🥨"];
+const newDeserts = deserts.concat(deserts2);
+console.log(newDeserts);
+```
+
+### 5. Searching
+- #### indexOf: find the index
+: Returns the index of the first occurrence of a value
+배열 안에 있는 데이터를 입력하면 해당 데이터의 인덱스 위치를 반환한다.(해당 데이터가 배열에 여러 개 있는 경우에는 가장 앞에 있는 데이터를 반환한다.)   
+만약 그 데이터가 배열에 없다면, -1을 반환한다.
+```javascript
+console.clear();
+console.log(deserts);
+console.log(deserts.indexOf("🍭")); // 2
+console.log(deserts.indexOf("🍩")); // -1
+```
+
+- #### includes
+: Determines whether an array includes a certain element, returning true or false as appropriate.   
+배열 안에 해당 데이터가 있는지 확인하여 true/false로 반환한다.
+```javascript
+console.log(deserts.includes("🎂")); // true
+console.log(deserts.includes("🧁")); // false
+```
+
+- #### lastIndexOf
+: Returns the index of the last occurrence of a specified value in an array   
+해당 데이터가 배열에 여러 개 있을 때, 가장 마지막에 있는 데이터를 반환한다.   
+```javascript
+console.clear();
+deserts.push("☕");
+console.log(deserts);
+console.log(deserts.indexOf("☕")); // 0
+console.log(deserts.lastIndexOf("☕")); // 5
 ```
