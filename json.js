@@ -45,7 +45,7 @@ rabbit.jump();
 // obj.jump();
 
 // 유의할 점!
-// rabbit을 JSON으로 변환할 때 데아터만 변환되고 함수는 포함되지 않기 때문에
+// rabbit을 JSON으로 변환할 때 데이터만 변환되고 함수는 포함되지 않기 때문에
 // 다시 JSON에서 object로 변환할 때도 함수가 포함되지 않으므로 그 object에는
 // jump라는 기능이 없다.
 
